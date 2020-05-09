@@ -100,21 +100,21 @@ void backwards(char **argv, int count){
 
 void reverse(char **argv, int count){
 
-	//initialize beginning word and ending word
-	int* startWord;
-	*startWord = argv[2][0];	
-	int* endWord;
-	*endWord  = argv[count][0]; 	
+	int start = 2;
+	int end = count-1;
+	char* temp;
 
-	//swap the beginning and end words until pointers reach the middle of sentence
-	for(int i=0; i<count/2; i++){
-		
+	while(start<end){
 
-			startWord++;
-			endWord--;
+		temp = argv[end];
+		argv[end] = argv[start];
+		argv[start] = temp;
+
+		start++;
+		end--;
+
 	}
-
-	printf("r\n");
+	
 }
 
 
