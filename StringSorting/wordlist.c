@@ -13,7 +13,6 @@ void reverse(char **argv, int count);
 // Sorts the string array argv, based on a total of count words.  Again, the list of words starts at index 2 (which needs to be accounted for in your sorting algorithm).
 void sort(char **argv, int count);
 
-
 int main(int argc, char* argv[]){
 
 
@@ -24,9 +23,9 @@ int main(int argc, char* argv[]){
 			printf(" Usage: program [-(b|r|s)+]\n");
 
 		}else if (argv[1][0] == '-'){ 
+			
 			int length = strlen(argv[1]);
-
-
+			//after every char past "-" (before the first word) call the appropriate function
 			for (int j = 1; j < length ; j++){
 
 				if (argv[1][j] == 'b'){
@@ -39,11 +38,23 @@ int main(int argc, char* argv[]){
 					sort(argv, argc);		
 				}	
 
-			}//end for
+			}
 
 
-			
-		}//end outter if
+			//print out the final config. of chars
+			for(int i=2; i<argc; i++){
+
+				printf("%s ", argv[i]);
+
+			}			
+
+			printf("\n");
+
+
+		}else{
+			printf(" Usage: program [-(b|r|s)+]\n");
+
+		}
 
 
 
@@ -52,49 +63,96 @@ int main(int argc, char* argv[]){
 
 void backwards(char **argv, int count){
 	
-	int* endPointer;
-	int* startPointer;
-	int* temp;
-	int length = 0;
-	int i = 0;
+	char *endPointer, *startPointer, temp;
+	int length;
 
+	//for each word after the -b
 	for(int j=2; j<count; j++){
-	
-		i = 0;
-		length = strlen(argv[j]);
-		while(*endPointer != *startPointer){		
-			
-				
-				*endPointer = argv[j][length-i] ;
-				*startPointer = argv[j][i] ;
-					if(*endPointer > *startPointer){
-			
-						*temp = *endPointer;	
-						*endPointer = *startPointer;
-						*startPointer = *temp;					
-				
-					}
 		
-				i++;				
-				
-		}//end while
-	}//end outterFor
+		length = strlen(argv[j]);
+		//start pointers at front
+		startPointer = argv[j];
+		endPointer = argv[j];
+		//put endPointer at end of word
+		for(int i=0; i<length-1; i++){		
+			endPointer++;
+		}
+
+			//starting from the front and back, swap the chars then ++ and -- respectfully	
+			for(int i=0; i<length/2; i++){			
+	
+				//swap characters in word
+				temp = *endPointer;
+				*endPointer = *startPointer;
+				*startPointer = temp;	
+								
+				//update pointer positions
+				startPointer++;
+				endPointer--;
+			}
+	}
 
 
 
-	printf("b");
+	//printf("b\n");
 }//end backwards()
 
 
 void reverse(char **argv, int count){
 
-	printf("r");
+	//initialize beginning word and ending word
+	int* startWord;
+	*startWord = argv[2][0];	
+	int* endWord;
+	*endWord  = argv[count][0]; 	
+
+	//swap the beginning and end words until pointers reach the middle of sentence
+	for(int i=0; i<count/2; i++){
+		
+
+			startWord++;
+			endWord--;
+	}
+
+	printf("r\n");
 }
+
 
 
 void sort(char **argv, int count){
+	
+	int length = 0;	
 
-	printf("s");
+	//lame bubblesort algorithm
+	for(int i=2; i<count-1; i++){
+		for(int j=2; j<count-i-1; j++){
+			
+			
+			if(strlen(argv[j]) > strlen(argv[j+1])){//string1 is longer than string2 check until len(string2)
+				length = strlen(argv[j+1]);
+			}else{//check until len(string1)
+				length = strlen(argv[j]);
+			}			
+
+			//run through both strings to see which comes first
+			for(int k=0; k<length; k++){
+				
+				if(argv[j][k]<argv[j+1][k]){//char in string1 comes before, is correct
+					break;
+				}else if(argv[j][k]>argv[j+1][k]){//char in string2 comes before, swap strings
+					//swap(&argv[j], &argv[j+1]);
+					break;
+				}
+
+			}
+	
+		}
+
+	}
+
+	printf("s\n");
 
 }
+
+
 
