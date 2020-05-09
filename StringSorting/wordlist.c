@@ -120,37 +120,24 @@ void reverse(char **argv, int count){
 
 
 void sort(char **argv, int count){
-	
-	int length = 0;	
+
+	char* temp;
 
 	//lame bubblesort algorithm
 	for(int i=2; i<count-1; i++){
-		for(int j=2; j<count-i-1; j++){
-			
-			
-			if(strlen(argv[j]) > strlen(argv[j+1])){//string1 is longer than string2 check until len(string2)
-				length = strlen(argv[j+1]);
-			}else{//check until len(string1)
-				length = strlen(argv[j]);
-			}			
+		for(int j=2; j<count-(i-2)-1; j++){
 
-			//run through both strings to see which comes first
-			for(int k=0; k<length; k++){
-				
-				if(argv[j][k]<argv[j+1][k]){//char in string1 comes before, is correct
-					break;
-				}else if(argv[j][k]>argv[j+1][k]){//char in string2 comes before, swap strings
-					//swap(&argv[j], &argv[j+1]);
-					break;
-				}
-
+			//compare through both strings to see which comes first				
+			if(strcmp(argv[j], argv[j+1]) > 0){//the string2 comes in the alphabet before
+				temp = argv[j+1];
+				argv[j+1] = argv[j];
+				argv[j] = temp;
 			}
 	
 		}
-
 	}
 
-	printf("s\n");
+	//printf("s\n");
 
 }
 
