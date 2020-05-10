@@ -6,58 +6,41 @@
 * Lab 6: Wordlist
 ****************/
 
-// Makes each word backwards, based on a total of count words.  Note that you will always start with index 2, since index 0 is the name of the executable and index 1 is the list of flags.
+// Makes each word backwards, based on a total of count words.  
 void backwards(char **argv, int count);
-// Reverses the sentence argv, based on a total of count words.  Again, the list of words starts at index 2.
+// Reverses the sentence argv, based on a total of count words. 
 void reverse(char **argv, int count);
-// Sorts the string array argv, based on a total of count words.  Again, the list of words starts at index 2 (which needs to be accounted for in your sorting algorithm).
+// Sorts the string array argv, based on a total of count words.  
 void sort(char **argv, int count);
 
 int main(int argc, char* argv[]){
 
-
-
-
+		//-----command line checks-----//
 		if(argc < 2){
-
 			printf(" Usage: program [-(b|r|s)+]\n");
-
 		}else if (argv[1][0] == '-'){ 
 			
 			int length = strlen(argv[1]);
-			//after every char past "-" (before the first word) call the appropriate function
+			//after every char past "-" (aka, before the first word) 
+			//call the appropriate function
 			for (int j = 1; j < length ; j++){
-
 				if (argv[1][j] == 'b'){
 					backwards(argv, argc);
-
 				}else if (argv[1][j] == 'r'){
 					reverse(argv, argc);
-
 				}else if (argv[1][j] == 's'){
 					sort(argv, argc);		
 				}	
-
 			}
-
-
-			//print out the final config. of chars
+			
+			//-----final print of output-----//
 			for(int i=2; i<argc; i++){
-
 				printf("%s ", argv[i]);
-
 			}			
-
 			printf("\n");
-
-
 		}else{
 			printf(" Usage: program [-(b|r|s)+]\n");
-
 		}
-
-
-
 }//end main
 
 
@@ -68,11 +51,12 @@ void backwards(char **argv, int count){
 
 	//for each word after the -b
 	for(int j=2; j<count; j++){
-		
+
 		length = strlen(argv[j]);
 		//start pointers at front
 		startPointer = argv[j];
 		endPointer = argv[j];
+
 		//put endPointer at end of word
 		for(int i=0; i<length-1; i++){		
 			endPointer++;
@@ -91,10 +75,6 @@ void backwards(char **argv, int count){
 				endPointer--;
 			}
 	}
-
-
-
-	//printf("b\n");
 }//end backwards()
 
 
@@ -103,20 +83,17 @@ void reverse(char **argv, int count){
 	int start = 2;
 	int end = count-1;
 	char* temp;
-
+	
+	//swap the first and last word untill pointers overlap
 	while(start<end){
-
 		temp = argv[end];
 		argv[end] = argv[start];
 		argv[start] = temp;
 
 		start++;
 		end--;
-
 	}
-	
-}
-
+}//end reverse
 
 
 void sort(char **argv, int count){
@@ -126,20 +103,12 @@ void sort(char **argv, int count){
 	//lame bubblesort algorithm
 	for(int i=2; i<count-1; i++){
 		for(int j=2; j<count-(i-2)-1; j++){
-
 			//compare through both strings to see which comes first				
 			if(strcmp(argv[j], argv[j+1]) > 0){//the string2 comes in the alphabet before
 				temp = argv[j+1];
 				argv[j+1] = argv[j];
 				argv[j] = temp;
 			}
-	
 		}
 	}
-
-	//printf("s\n");
-
-}
-
-
-
+}//end sort
